@@ -56,6 +56,19 @@ public class Dealership {
     }
 
     public void removeVehicle(Vehicle vehicle) {
+        inventory.remove(vehicle);
+    }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

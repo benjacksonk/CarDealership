@@ -1,8 +1,6 @@
 package org.yup.cardealership;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class DealershipFileManager {
     /*
@@ -57,7 +55,35 @@ public class DealershipFileManager {
         }
     }
 
-    public void saveDealership(Dealership dealership) {
+    public void saveDealership(Dealership dealer) {
+        try {
+            FileWriter fileWriter = new FileWriter("inventory.csv");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
+            bufferedWriter.write(
+                    String.format("%s|%s|%s", dealer.getName(), dealer.getAddress(), dealer.getPhone())
+            );
+
+            for (Vehicle vehicle: dealer.getAllVehicles()) {
+                bufferedWriter.write(
+                        String.format("%n%d|%d|%s|%s|%s|%s|%d|%.2f",
+                                vehicle.getVin(),
+                                vehicle.getYear(),
+                                vehicle.getMake(),
+                                vehicle.getModel(),
+                                vehicle.getVehicleType(),
+                                vehicle.getColor(),
+                                vehicle.getOdometer(),
+                                vehicle.getPrice()
+                        )
+                );
+            }
+
+            bufferedWriter.close();
+            fileWriter.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
