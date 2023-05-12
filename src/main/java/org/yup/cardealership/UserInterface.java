@@ -22,21 +22,46 @@ public class UserInterface {
     }
 
     private void displayVehicles(ArrayList<Vehicle> vehicles) {
-        for (Vehicle vehicle: vehicles) {
-            System.out.printf("%s %s %s%n", vehicle.getYear(), vehicle.getMake(), vehicle.getModel());
+
+        if (vehicles.size() > 0) {
+
+            System.out.println(" VIN   YEAR");
+
+            //for each Vehicle in vehicles
+            for (Vehicle vehicle : vehicles) {
+
+                //show vehicle info
+                System.out.printf("%d  %d  %s %s  -  %s, %s, %d mi, $ %.2f%n",
+                        vehicle.getVin(),
+                        vehicle.getYear(),
+                        vehicle.getMake(),
+                        vehicle.getModel(),
+                        vehicle.getVehicleType(),
+                        vehicle.getColor(),
+                        vehicle.getMileage(),
+                        vehicle.getPrice()
+                );
+            }
+        }
+        else {
+            System.out.println("Sorry, none in inventory.");
         }
     }
 
     public void display() {
+
         init();
 
-        System.out.printf("Welcome to %s!%n%s%n%s%n%n",
-                        dealership.getName(), dealership.getAddress(), dealership.getPhone()
+        //show dealership info
+        System.out.printf(
+                "Welcome to %s!%n%s%n%s%n",
+                dealership.getName(), dealership.getAddress(), dealership.getPhone()
         );
 
         boolean loop = true;
         do {
-            System.out.println("MENU");
+            //show the menu
+            System.out.println("\nMENU");
             System.out.println("1) Show All Vehicles");
             System.out.println("2) Show Vehicles by Price");
             System.out.println("3) Show Vehicles by Make & Model");
@@ -46,7 +71,7 @@ public class UserInterface {
             System.out.println("7) Show Vehicles by Type");
             System.out.println("8) Add Vehicle");
             System.out.println("9) Remove Vehicle");
-            System.out.println("else) Exit");
+            System.out.println("0) Exit");
 
             //read user command
             String userInput = promptUserLine("");
@@ -66,50 +91,69 @@ public class UserInterface {
                 case "9" -> processRemoveVehicleRequest();
                 default  -> loop = false;
             }
-
-            if (loop) {
-                System.out.println();
-            }
         } while (loop);
     }
 
     public void processGetByPriceRequest() {
-
+        System.out.println("SEARCH");
+        double min = Double.parseDouble(promptUserLine("Enter minimum price: $ "));
+        double max = Double.parseDouble(promptUserLine("Enter maximum price: $ "));
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
     public void processGetByMakeModelRequest() {
-
+        System.out.println("SEARCH");
+        String make = promptUserLine("Enter vehicle make: ");
+        String model = promptUserLine("Enter vehicle model: ");
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByMakeModel(make, model));
     }
 
     public void processGetByYearRequest() {
-
+        System.out.println("SEARCH");
+        int min = Integer.parseInt(promptUserLine("Enter minimum year: "));
+        int max = Integer.parseInt(promptUserLine("Enter maximum year: "));
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByYear(min, max));
     }
 
     public void processGetByColorRequest() {
-
+        System.out.println("SEARCH");
+        String color = promptUserLine("Enter color: ");
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByColor(color));
     }
 
     public void processGetByMileageRequest() {
-
+        System.out.println("SEARCH");
+        int min = Integer.parseInt(promptUserLine("Enter minimum mileage: "));
+        int max = Integer.parseInt(promptUserLine("Enter maximum mileage: "));
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByMileage(min, max));
     }
 
     public void processGetByVehicleTypeRequest() {
-
+        System.out.println("SEARCH");
+        String vehicleType = promptUserLine("Enter vehicle type: ");
+        System.out.println("VEHICLES");
+        displayVehicles(dealership.getVehiclesByType(vehicleType));
     }
 
     public void processGetAllVehiclesRequest() {
-        System.out.println("VEHICLES:");
+        System.out.println("VEHICLES");
         displayVehicles(dealership.getAllVehicles());
     }
 
     public void processAddVehicleRequest() {
+
         System.out.println("ADD VEHICLE");
 
         int vehicleVin = Integer.parseInt(promptUserLine("VIN: "));
 
         for (Vehicle vehicle: dealership.getAllVehicles()) {
             if (vehicle.getVin() == vehicleVin) {
-                System.out.println("ERROR: That vehicle is already in inventory.");
+                System.out.println("ERROR - That vehicle is already in inventory.");
                 return;
             }
         }
@@ -122,29 +166,36 @@ public class UserInterface {
         int vehicleOdometer = Integer.parseInt(promptUserLine("Mileage: "));
         double vehiclePrice = Double.parseDouble(promptUserLine("Price: "));
 
-        Vehicle vehicle = new Vehicle(vehicleVin, vehicleYear,
-                vehicleMake, vehicleModel, vehicleType,
-                vehicleColor, vehicleOdometer, vehiclePrice);
+        Vehicle vehicle = new Vehicle(
+                vehicleVin, vehicleYear, vehicleMake, vehicleModel,
+                vehicleType, vehicleColor, vehicleOdometer, vehiclePrice
+        );
 
         dealership.addVehicle(vehicle);
         new DealershipFileManager().saveDealership(dealership);
     }
 
     public void processRemoveVehicleRequest() {
+
         System.out.println("REMOVE VEHICLE");
 
         int vehicleVin = Integer.parseInt(promptUserLine("VIN: "));
 
         for (Vehicle vehicle: dealership.getAllVehicles()) {
+
             if (vehicle.getVin() == vehicleVin) {
+
                 dealership.removeVehicle(vehicle);
+
                 new DealershipFileManager().saveDealership(dealership);
+
                 System.out.println("Vehicle removed.");
+
                 return;
             }
         }
 
-        System.out.println("ERROR: That vehicle is not in inventory.");
+        System.out.println("ERROR - That vehicle is not in inventory.");
     }
 
     public Dealership getDealership() {

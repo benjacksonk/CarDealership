@@ -24,27 +24,108 @@ public class Dealership {
     }
 
     public ArrayList<Vehicle> getVehiclesByPrice(double min, double max) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle price is in the given range, appropriateVehicles list adds vehicle
+
+            double price = vehicle.getPrice();
+
+            if (price >= min && price <= max) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getVehiclesByMakeModel(String make, String model) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle make and model match given values, appropriateVehicles list adds vehicle
+            if (vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model)) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getVehiclesByYear(int min, int max) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle year is in the given range, appropriateVehicles list adds vehicle
+
+            double year = vehicle.getYear();
+
+            if (year >= min && year <= max) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getVehiclesByColor(String color) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle color matches given value, appropriateVehicles list adds vehicle
+            if (vehicle.getColor().equalsIgnoreCase(color)) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getVehiclesByMileage(int min, int max) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle mileage is in the given range, appropriateVehicles list adds vehicle
+
+            double mileage = vehicle.getMileage();
+
+            if (mileage >= min && mileage <= max) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getVehiclesByType(String vehicleType) {
-        return null;
+
+        ArrayList<Vehicle> appropriateVehicles = new ArrayList<Vehicle>();
+
+        //for each Vehicle in inventory
+        for (Vehicle vehicle: inventory) {
+
+            //if vehicle type matches given value, appropriateVehicles list adds vehicle
+            if (vehicle.getVehicleType().equalsIgnoreCase(vehicleType)) {
+                appropriateVehicles.add(vehicle);
+            }
+        }
+
+        return appropriateVehicles;
     }
 
     public ArrayList<Vehicle> getAllVehicles() {

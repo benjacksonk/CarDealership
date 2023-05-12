@@ -13,9 +13,8 @@ public class Vehicle {
     private int odometer;
     private double price;
 
-    public Vehicle(int vin, int year,
-                   String make, String model, String vehicleType,
-                   String color, int odometer, double price)
+    public Vehicle(int vin, int year, String make, String model,
+                   String vehicleType, String color, int odometer, double price)
     {
         this.vin = vin;
         this.year = year;
@@ -51,7 +50,7 @@ public class Vehicle {
         return color;
     }
 
-    public int getOdometer() {
+    public int getMileage() {
         return odometer;
     }
 
